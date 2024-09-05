@@ -1,0 +1,23 @@
+# Ignore common Python files and directories
+*.pyc
+.DS_Store
+.env
+.venv
+.idea
+__pycache__
+venv
+
+# Ignore PyCharm configuration files
+*.iml
+*.ipr
+*.iws
+
+# Ignore PyCharm settings files
+/.idea/workspace.xml
+/.idea/misc.xml
+
+# Ignore sensitive data
+*.env
+*.cache
+*.log
+commands.txt
