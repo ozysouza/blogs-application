@@ -1,0 +1,30 @@
+{% macro displayField(fieldName, placeholderValue) %}
+    <div class="form-floating mb-4">
+        {{ fieldName(class_='form-control', id=fieldName.id, placeholder=placeholderValue, **kwargs) }}
+        {{ fieldName.label(class_="form-label required-field", for=fieldName.id) }}
+        <ul class="list-group">
+            {% for error in fieldName.errors %}
+                <li class="list-group-item list-group-item-danger">
+                    <span>{{ error }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro displayFlaskMessage() %}
+    <!-- Flask message -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endmacro %}
+
+
+

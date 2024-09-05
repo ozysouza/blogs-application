@@ -1,0 +1,38 @@
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+
+<div aria-hidden="true" aria-labelledby="loginModalLabel" class="modal fade" id="loginModal"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Sign in</h5>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                        type="button"></button>
+            </div>
+            <div class="modal-body">
+                {{ displayFlaskMessage() }}
+                <form action="{{ url_for('auth.login') }}" method="POST">
+                    {{ login_form.csrf_token }}
+                    {{ displayField(login_form.email, 'Email') }}
+                    {{ displayField(login_form.password, 'Password') }}
+                    {{ login_form.submit_button(class="btn btn-dark mb-2") }}
+                </form>
+                <div>
+                    Don't have an account yet?
+                    <a class="btn btn-link" href="{{ url_for('auth.register_user') }}" role="button">Create
+                        Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to Control Modal Visibility -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        {% if show_modal %}
+            var myModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            myModal.show();
+        {% endif %}
+    });
+</script>

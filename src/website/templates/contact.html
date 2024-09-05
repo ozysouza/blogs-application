@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<!-- Page Header-->
+<header class="masthead"
+        style="background-image: url('{{ url_for('static', filename='assets/images/contact-us.jpg') }}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading pt-10">
+                    <h1>.</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon
+                    as possible!</p>
+                <div class="my-5">
+                    {{ displayFlaskMessage() }}
+                    <form action="{{ url_for('views.contact_page') }}" method="POST">
+                        {{ contact_form.csrf_token }}
+                        {{ displayField(contact_form.username, 'Name', autocomplete="off", autofocus=true) }}
+                        {{ displayField(contact_form.email, 'Email') }}
+                        {{ displayField(contact_form.number, 'Number') }}
+                        {{ displayField(contact_form.message, 'Your message') }}
+                        {{ contact_form.submit_button(class="btn btn-dark") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

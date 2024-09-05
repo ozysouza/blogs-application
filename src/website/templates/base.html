@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+    />
+
+    {% block styles %}
+    <!-- Load Bootstrap-Flask CSS here -->
+    {{ bootstrap.load_css() }}
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link
+            href="{{ url_for('static', filename='css/styles.css') }}"
+            rel="stylesheet"
+            type="text/css"
+    />
+    <link
+            href="{{ url_for('static', filename='assets/favicon.ico') }}"
+            rel="icon"
+            type="image/x-icon"
+    />
+    <link
+            crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            rel="stylesheet"
+    />
+    <!-- Font Awesome icons (free version)-->
+    <script
+            crossorigin="anonymous"
+            src="https://use.fontawesome.com/releases/v6.3.0/js/all.js">
+    </script>
+    <!-- Google fonts-->
+    <link
+            href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+            rel="stylesheet"
+            type="text/css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+            rel="stylesheet"
+            type="text/css"
+    />
+    <link href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css"
+          rel="stylesheet"
+    />
+
+    {% endblock %}
+
+    {% from 'form_helper.html' import displayField, displayFlaskMessage with context %}
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<header role="banner">
+    <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+        <div class="text-nowrap container-fluid px-4 px-lg-5 mt-4">
+            <!-- Navbar brand or logo can go here -->
+            <!--            <a class="navbar-brand" href="{{ url_for('views.home_page') }}">Home</a>-->
+
+            <!-- Toggler for mobile view -->
+            <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="navbar-collapse d-lg-flex collapse show" id="navbarNav">
+                <a class="navbar-brand col-lg-3 me-0" href="#">Find and image later</a>
+                <!-- Left-aligned links -->
+                <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link fs-4 me-4" href="{{ url_for('views.home_page') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-4 me-4" href="{{ url_for('views.about_page') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="{{ url_for('views.contact_page') }}">Contact</a>
+                    </li>
+                </ul>
+                <!-- Right-aligned buttons -->
+                <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+                    {% if not current_user.is_authenticated %}
+                    <button class="btn btn-outline-light me-4" data-bs-target="#loginModal" data-bs-toggle="modal"
+                            type="button">Sign In
+                    </button>
+                    <button class="btn btn-outline-light"
+                            onclick="window.location.href='{{ url_for('auth.register_user') }}'" type="button">Register
+                    </button>
+                    {% else %}
+                    <button class="btn btn-outline-light me-4"
+                            onclick="window.location.href='{{ url_for('views.new_blog') }}'" type="button">Create Blog
+                    </button>
+                    <button class="btn btn-secondary me-4" disabled>
+                        <svg class="me-2" focusable="false" height="24" role="presentation" viewBox="0 0 24 24"
+                             width="24" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path d="M20 20.491a.503.503 0 0 1-.496.505H4.496A.493.493 0 0 1 4 20.49v-1.495C4 16 6.246 13.8 8.756 12.683 7.682 11.675 7 10.174 7 8.5 7 5.462 9.239 3 12 3s5 2.462 5 5.499c0 1.675-.68 3.175-1.755 4.183C17.758 13.797 20 15.995 20 18.996v1.495zM6.083 18.996H18c0-2.996-2.5-4.999-6-4.999s-6 2.003-5.917 5zM12 11.998c1.657 0 3-1.567 3-3.5C15 6.567 13.657 5 12 5S9 6.566 9 8.499c0 1.932 1.343 3.499 3 3.499z"></path>
+                            </g>
+                        </svg>
+                        <span>{{ current_user.email }}</span>
+                    </button>
+                    <button class="btn btn-outline-light d-flex align-items-center"
+                            onclick="window.location.href='{{ url_for('auth.logout') }}'"
+                            type="button">Log Out
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script>
+        function toggleNavbarBackground() {
+            const navbar = document.getElementById('mainNav');
+            if (window.innerWidth < 992) {
+                navbar.classList.add('bg-dark');
+            } else {
+                navbar.classList.remove('bg-dark');
+            }
+        }
+
+        // Run the function when the page is loaded and when it is resized
+        window.addEventListener('load', toggleNavbarBackground);
+        window.addEventListener('resize', toggleNavbarBackground);
+    </script>
+</header>
+{% block content %}
+<!-- Page Content -->
+{% endblock %}
+<!-- Sign in Modal -->
+{% include 'login_modal.html' %}
+<!-- Footer-->
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="https://medium.com/@ozieldesouza" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-medium fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/oziel-m-souza/" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/ozysouza" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="small text-center text-muted fst-italic">Copyright &copy;OzielDeSouza {{ year }}</div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JS-->
+<script
+        crossorigin="anonymous"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+<!-- Core theme JS-->
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

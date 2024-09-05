@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<header class="masthead"
+        style="background-image: url('{{ url_for('static', filename='assets/images/register.jpg') }}')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading pt-10">
+                    <h1>CREATE ACCOUNT</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="my-5">
+                    {{ displayFlaskMessage() }}
+                    <form action="{{ url_for('auth.register_user') }}" method="POST">
+                        {{ register_form.csrf_token }}
+                        {{ displayField(register_form.firstname, 'First Name', autocomplete="off", autofocus=true) }}
+                        {{ displayField(register_form.lastname, 'Last Name', autocomplete="off", autofocus=true) }}
+                        {{ displayField(register_form.email, 'Your email') }}
+                        {{ displayField(register_form.password, 'Your password') }}
+                        {{ displayField(register_form.confirm_password, 'Re-type password') }}
+                        {{ register_form.submit_button(class="btn btn-dark") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
