@@ -1,4 +1,4 @@
-Blog Platform with User Authentication
+# Blog Platform with User Authentication
 This project is a web-based blogging platform built using Python, Jinja2, Mysql, Flask and BootStrap5.
 
 The platform allows users to create, edit, and manage blog posts while providing a robust authentication system to ensure secure access. 
@@ -39,44 +39,39 @@ Bootstrap 5.3.3: Frontend framework for responsive design and UI components.
 Python Dataclasses: Used to define data models for User and Blog.
 Werkzeug Security: Provides password hashing for secure storage.
 
-Getting Started
+# Getting Started
 Prerequisites
 Python 3.7+
 MySQL Server
 Virtual Environment (venv)
 
-Installation
+# Installation
 Clone the Repository:
-
-bash
-Copy code
 git clone https://github.com/ozysouza/blogs-application.git
 cd your-repo-name
+
 Create and Activate a Virtual Environment:
-
-bash
-
 pyp3 install virtualenv
 Active virtual environment: source .venv/bin/activate  # On Windows use `venv\Scripts\activate`
 Deactivate virtual environment: deactivate
 
-Install Dependencies:
+# Install Dependencies:
 pip install -r requirements.txt
 
 If there is an error to install the mysql connector, run the following command
 
 python -m pip install mysql-connector 
 
-Set Up the MySQL Database:
+# Set Up the MySQL Database:
 
 Make sure you have the MySql installed and set the credentials on the environment variables.
 
-Run the Application:
+# Run the Application:
 
 flask run
 The application will be available at http://127.0.0.1:5000.
 
-Folder Structure
+# Folder Structure
 src/: Contains the main application source code.
 src/database: Handles the mysql manager
 src/helpers: Handles several functions as mail_manager, forms, blogs_manager, user_manger and models.
