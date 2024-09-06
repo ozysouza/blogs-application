@@ -24,50 +24,62 @@
             <h1 class="text-nowrap">There are no blogs yet! Sign in and create a new one!</h1>
         </div>
         {% else %}
-            {% for blog in all_blogs %}
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                    <!-- Text Column -->
-                    <div class="col-md-6 p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-primary">Technology</strong>
-                        <h3 class="mb-0">{{ blog.title }}</h3>
-                        <span class="mb-1 text-muted">{{ blog.date }}</span>
-                        <p class="card-text mb-auto">{{ blog.subtitle }}</p>
-                        <a href="{{ url_for('views.find_blog', blog_id=blog.blog_id) }}" class="d-block mt-2 mb-2">Continue reading</a>
-                        {% if current_user.is_authenticated %}
-                        <button type="button" class="btn btn-danger mt-2 align-self-start" data-bs-toggle="modal" data-bs-target="#deleteBlog{{ blog.blog_id }}">
-                            Delete
-                        </button>
-                        {% endif %}
-                        <!-- Modal -->
-                        <div class="modal fade" id="deleteBlog{{ blog.blog_id }}" tabindex="-1" role="dialog"
-                             aria-labelledby="blogModalLabel{{ blog.blog_id }}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteBlogLabel{{ blog.blog_id }}">Delete Blog?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-danger">Are you sure you want to delete
-                                            <strong>{{blog.title}} ? You can't undo this action.</strong>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" onclick="window.location.href='{{ url_for('views.delete_blog', blog_id=blog.blog_id) }}'">Delete Blog</button>
-                                    </div>
+        {% for blog in all_blogs %}
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <!-- Text Column -->
+                <div class="col-md-6 p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">Technology</strong>
+                    <h3 class="mb-0">{{ blog.title }}</h3>
+                    <span class="mb-1 text-muted">{{ blog.date }}</span>
+                    <p class="card-text mb-auto">{{ blog.subtitle }}</p>
+                    <a class="d-block mt-2 mb-2" href="{{ url_for('views.find_blog', blog_id=blog.blog_id) }}">Continue
+                        reading</a>
+                    {% if current_user.is_authenticated and current_user.get_id() == blog.user_id|string %}
+                    <button class="btn btn-danger mt-4" data-bs-target="#deleteBlog{{ blog.blog_id }}"
+                            data-bs-toggle="modal"
+                            type="button">
+                        Delete
+                    </button>
+                    <a class="btn btn-dark mt-4" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit
+                        Blog</a>
+                    {% endif %}
+                    <!-- Modal -->
+                    <div aria-hidden="true" aria-labelledby="blogModalLabel{{ blog.blog_id }}" class="modal fade"
+                         id="deleteBlog{{ blog.blog_id }}"
+                         role="dialog" tabindex="-1">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteBlogLabel{{ blog.blog_id }}">Delete Blog?</h5>
+                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                            type="button"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-danger">Are you sure you want to delete
+                                        <strong>{{blog.title}} ? You can't undo this action.</strong>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close
+                                    </button>
+                                    <button class="btn btn-danger"
+                                            onclick="window.location.href='{{ url_for('views.delete_blog', blog_id=blog.blog_id) }}'"
+                                            type="button">
+                                        Delete Blog
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Image Column -->
-                    <div class="col-md-6 d-flex justify-content-center align-items-center">
-                        <img src="{{ blog.img_url }}" alt="Thumbnail" class="img-fluid" style="width: 100%; height: auto;">
-                    </div>
+                </div>
+                <!-- Image Column -->
+                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                    <img alt="Thumbnail" class="img-fluid" src="{{ blog.img_url }}" style="width: 100%; height: auto;">
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
         {% endif %}
     </div>
 </div>

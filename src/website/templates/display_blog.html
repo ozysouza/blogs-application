@@ -30,10 +30,11 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <h3 class="post-subtitle">{{ blog.subtitle }}</h3>
-                <img src="{{ blog.img_url }}" class="img-fluid" alt="Blog Image" style="max-width: 100%; height: auto;">
+                <img alt="Blog Image" class="img-fluid" src="{{ blog.img_url }}" style="max-width: 100%; height: auto;">
                 <p>{{ blog.body | safe }}</p>
-                {% if current_user.is_authenticated %}
-                <a class="btn btn-dark float-right" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit Blog</a>
+                {% if current_user.is_authenticated and current_user.get_id() == blog.user_id|string %}
+                <a class="btn btn-dark float-right" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit
+                    Blog</a>
                 {% endif %}
             </div>
         </div>
