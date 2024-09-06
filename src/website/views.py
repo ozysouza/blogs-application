@@ -8,8 +8,6 @@ from src.helpers.mail_manager import MailManager
 from src.helpers.log import Log
 from src.helpers.forms import ContactForm, CreateBlogForm, LoginForm
 
-import requests
-
 # Setup logging
 logger = Log().logger
 
@@ -84,22 +82,20 @@ def edit_blog() -> Response | str:
     requested_blog = blogs_manager.get_by_id(blog_id)
     try:
         if requested_blog:
-            edit_form = CreateBlogForm(title=requested_blog['title'],
-                                       subtitle=requested_blog['subtitle'],
-                                       author=requested_blog['author'],
-                                       img_url=requested_blog['img_url'],
-                                       content=requested_blog['body'])
+            edit_form = CreateBlogForm(title=requested_blog.title,
+                                       subtitle=requested_blog.subtitle,
+                                       img_url=requested_blog.img_url,
+                                       content=requested_blog.body)
 
             if edit_form.validate_on_submit():
                 blogs_manager.update(
                     blog_id,
                     edit_form.title.data,
                     edit_form.subtitle.data,
-                    edit_form.author.data,
                     edit_form.img_url.data,
                     edit_form.content.data)
                 updated_blog = blogs_manager.get_by_id(blog_id)
-                return render_template("display_blog.html", blog=updated_blog)
+                return render_template("display_blog.html", blog=updated_blog, login_form=login_form)
         else:
             logger.warning(f"Blog with id: {blog_id} not found.")
             return redirect(url_for('views.home_page'))
@@ -179,7 +175,6 @@ def new_blog() -> Response | str:
         if blog_form.validate_on_submit():
             blogs_manager.add(blog_form.title.data,
                               blog_form.subtitle.data,
-                              blog_form.author.data,
                               blog_form.img_url.data,
                               blog_form.content.data)
             return redirect(url_for('views.home_page'))
