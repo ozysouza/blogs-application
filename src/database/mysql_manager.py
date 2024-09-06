@@ -309,14 +309,13 @@ class MysqlManager:
             self.logger.error(f'Error retrieving the table data: {err}')
             return None
 
-    def update_blog(self, blog_id: str, title: str, subtitle: str, author: str, img_url, body) -> bool:
+    def update_blog(self, blog_id: str, title: str, subtitle: str, img_url, body: str) -> bool:
         """
         Update specific blog in the database.
         Args:
             blog_id (str): The id of the blog.
             title (str): The title of the blog.
             subtitle (str): The subtitle of the blog.
-            author (str): The Author of the blog.
             img_url (str): The image URL that will be displayed on the card.
             body (str): The content of the blog.
           Returns:
@@ -325,11 +324,11 @@ class MysqlManager:
         try:
             query = '''
                 UPDATE blogs
-                SET title = %s, subtitle = %s, author = %s, img_url = %s, body = %s 
+                SET title = %s, subtitle = %s, img_url = %s, body = %s 
                 WHERE blog_id = %s
                 '''
 
-            self.mycursor.execute(query, (title, subtitle, author, img_url, body, blog_id))
+            self.mycursor.execute(query, (title, subtitle, img_url, body, blog_id))
             self.myconnection.commit()
             self.logger.info('Blog successfully updated into database.')
             return True

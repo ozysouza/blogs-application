@@ -24,6 +24,6 @@ class BlogsManager(MysqlManager):
     def get_by_id(self, blog_id: str) -> Blog | None:
         return self.get_blog_by_id(blog_id)
 
-    def update(self, blog_id: str, title: str, subtitle: str, author: str, img_url: str, body: str) -> bool:
-        return self.update_blog(blog_id, title, subtitle, author, img_url, body)
+    def update(self, blog_id: str, title: str, subtitle: str, img_url: str, body: str) -> bool:
+        return self.update_blog(blog_id, title, subtitle, img_url, body)
 

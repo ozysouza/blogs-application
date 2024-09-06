@@ -35,9 +35,8 @@ class ContactForm(FlaskForm):
 class CreateBlogForm(FlaskForm):
     """ Blog Form """
     title = StringField('Blog Title', validators=[DataRequired(message='Blog Title is required.')])
-    subtitle = StringField('Subtitle', validators=[DataRequired(message='Subtitle required.')])
-    author = StringField('Author Name', validators=[DataRequired()])
-    img_url = StringField('Blog Image URL')
+    subtitle = StringField('Subtitle', validators=[DataRequired(message='Subtitle is required.')])
+    img_url = StringField('Blog Image URL', validators=[DataRequired(message='Image URL is required.')])
     content = CKEditorField('Content', validators=[DataRequired(message='Text is required.')])
     submit_button = SubmitField('Submit Blog')
 
