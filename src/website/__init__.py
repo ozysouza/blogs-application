@@ -35,7 +35,6 @@ def create_app():
         login_form = LoginForm()
         return render_template('error.html', login_form=login_form), 403
 
-
     @login_manager.unauthorized_handler
     def unauthorized():
         return abort(403)

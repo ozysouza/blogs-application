@@ -20,7 +20,9 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         {% if not all_blogs %}
-            <p>Empty</p>
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <h1 class="text-nowrap">There are no blogs yet! Sign in and create a new one!</h1>
+        </div>
         {% else %}
             {% for blog in all_blogs %}
             <div class="col-md-10 col-lg-8 col-xl-7">
