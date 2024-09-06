@@ -36,12 +36,12 @@
                     <a class="d-block mt-2 mb-2" href="{{ url_for('views.find_blog', blog_id=blog.blog_id) }}">Continue
                         reading</a>
                     {% if current_user.is_authenticated and current_user.get_id() == blog.user_id|string %}
-                    <button class="btn btn-danger mt-4" data-bs-target="#deleteBlog{{ blog.blog_id }}"
+                    <button class="btn btn-danger mt-3" data-bs-target="#deleteBlog{{ blog.blog_id }}"
                             data-bs-toggle="modal"
                             type="button">
                         Delete
                     </button>
-                    <a class="btn btn-dark mt-4" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit
+                    <a class="btn btn-dark mt-3" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit
                         Blog</a>
                     {% endif %}
                     <!-- Modal -->
