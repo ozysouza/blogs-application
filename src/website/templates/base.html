@@ -69,17 +69,26 @@
 
             <!-- Collapsible content -->
             <div class="navbar-collapse d-lg-flex collapse show" id="navbarNav">
-                <a class="navbar-brand col-lg-3 me-0" href="#">Find and image later</a>
+                <a class="navbar-brand col-lg-3 me-0" href="#">Find an image later</a>
                 <!-- Left-aligned links -->
                 <ul class="navbar-nav col-lg-6 justify-content-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link fs-4 me-4" href="{{ url_for('views.home_page') }}">Home</a>
+                        <a class="link-light link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover fs-4 me-5"
+                           href="{{ url_for('views.home_page') }}">
+                            HOME
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-4 me-4" href="{{ url_for('views.about_page') }}">About</a>
+                        <a class="link-light link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover fs-4 me-5"
+                           href="{{ url_for('views.about_page') }}">
+                            ABOUT
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fs-4" href="{{ url_for('views.contact_page') }}">Contact</a>
+                        <a class="link-light link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover fs-4"
+                           href="{{ url_for('views.contact_page') }}">
+                            CONTACT
+                        </a>
                     </li>
                 </ul>
                 <!-- Right-aligned buttons -->
