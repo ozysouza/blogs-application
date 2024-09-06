@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from src.helpers.models import User, Blog
-
 from src.helpers.log import Log
 
 import mysql.connector as mysql
@@ -217,7 +216,7 @@ class MysqlManager:
             self.logger.error(f'Failed to retrieve user: {err}')
             return None
 
-    def add_blog(self, title: str, subtitle: str, date: str, author: str, img_url, body) -> bool:
+    def add_blog(self, title: str, subtitle: str, date: str, author: str, img_url, body, user_id: int) -> bool:
         """
         Insert the blog into the database.
         Args:
@@ -227,14 +226,15 @@ class MysqlManager:
             author (str): The Author of the blog.
             img_url (str): The image URL that will be displayed on the card.
             body (str): The content of the blog.
+            user_id (int): The user ID who created the blog.
           Returns:
               Boolean
         """
         try:
             self.mycursor.execute(f'USE {self.db_name}')
-            query = ('INSERT INTO blogs (title, subtitle, date, author, img_url, body)'
-                     'VALUES (%s, %s, %s, %s, %s, %s)')
-            self.mycursor.execute(query, (title, subtitle, date, author, img_url, body))
+            query = ('INSERT INTO blogs (title, subtitle, date, author, img_url, body, user_id)'
+                     'VALUES (%s, %s, %s, %s, %s, %s, %s)')
+            self.mycursor.execute(query, (title, subtitle, date, author, img_url, body, user_id))
             self.myconnection.commit()
             self.logger.info('Blog successfully inserted into database.')
             return True
