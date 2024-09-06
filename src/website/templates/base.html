@@ -103,19 +103,24 @@
                     <button class="btn btn-outline-light me-4"
                             onclick="window.location.href='{{ url_for('views.new_blog') }}'" type="button">Create Blog
                     </button>
-                    <button class="btn btn-secondary me-4" disabled>
-                        <svg class="me-2" focusable="false" height="24" role="presentation" viewBox="0 0 24 24"
-                             width="24" xmlns="http://www.w3.org/2000/svg">
-                            <g fill-rule="evenodd">
-                                <path d="M20 20.491a.503.503 0 0 1-.496.505H4.496A.493.493 0 0 1 4 20.49v-1.495C4 16 6.246 13.8 8.756 12.683 7.682 11.675 7 10.174 7 8.5 7 5.462 9.239 3 12 3s5 2.462 5 5.499c0 1.675-.68 3.175-1.755 4.183C17.758 13.797 20 15.995 20 18.996v1.495zM6.083 18.996H18c0-2.996-2.5-4.999-6-4.999s-6 2.003-5.917 5zM12 11.998c1.657 0 3-1.567 3-3.5C15 6.567 13.657 5 12 5S9 6.566 9 8.499c0 1.932 1.343 3.499 3 3.499z"></path>
-                            </g>
-                        </svg>
-                        <span>{{ current_user.email }}</span>
-                    </button>
-                    <button class="btn btn-outline-light d-flex align-items-center"
-                            onclick="window.location.href='{{ url_for('auth.logout') }}'"
-                            type="button">Log Out
-                    </button>
+                    <div class="btn-group me-4">
+                        <button class="btn btn-secondary" type="button">
+                            <svg class="me-2" focusable="false" height="24" role="presentation" viewBox="0 0 24 24"
+                                 width="24" xmlns="http://www.w3.org/2000/svg">
+                                <g fill-rule="evenodd">
+                                    <path d="M20 20.491a.503.503 0 0 1-.496.505H4.496A.493.493 0 0 1 4 20.49v-1.495C4 16 6.246 13.8 8.756 12.683 7.682 11.675 7 10.174 7 8.5 7 5.462 9.239 3 12 3s5 2.462 5 5.499c0 1.675-.68 3.175-1.755 4.183C17.758 13.797 20 15.995 20 18.996v1.495zM6.083 18.996H18c0-2.996-2.5-4.999-6-4.999s-6 2.003-5.917 5zM12 11.998c1.657 0 3-1.567 3-3.5C15 6.567 13.657 5 12 5S9 6.566 9 8.499c0 1.932 1.343 3.499 3 3.499z"></path>
+                                </g>
+                            </svg>
+                            {{ current_user.email }}
+                        </button>
+                        <button aria-expanded="false" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" type="button">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sign Out</a></li>
+                        </ul>
+                    </div>
                     {% endif %}
                 </div>
             </div>
