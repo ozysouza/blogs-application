@@ -26,28 +26,32 @@
         {% else %}
         {% for blog in all_blogs %}
         <div class="col-md-10 col-lg-8 col-xl-7">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <!-- Text Column -->
-                <div class="col-md-6 p-4 d-flex flex-column position-static">
+            <div class="border rounded overflow-hidden mb-4 shadow-sm position-relative">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img alt="Thumbnail" class="img-fluid" src="{{ blog.img_url }}" style="width: 100%; height: auto;">
+                </div>
+
+                <div class="p-4 d-flex flex-column position-static">
                     <strong class="d-inline-block mb-2 text-primary">Technology</strong>
                     <h3 class="mb-0">{{ blog.title }}</h3>
-                    <span class="mb-1 text-muted">{{ blog.date }}</span>
+                    <hr>
+                    <span class="mb-1 text-muted">Posted by <strong>{{ blog.author }}</strong> on {{ blog.date }}</span>
                     <p class="card-text mb-auto">{{ blog.subtitle }}</p>
                     <a class="d-block mt-2 mb-2" href="{{ url_for('views.find_blog', blog_id=blog.blog_id) }}">Continue
                         reading</a>
+
                     {% if current_user.is_authenticated and current_user.get_id() == blog.user_id|string %}
                     <button class="btn btn-danger mt-3" data-bs-target="#deleteBlog{{ blog.blog_id }}"
-                            data-bs-toggle="modal"
-                            type="button">
+                            data-bs-toggle="modal" type="button">
                         Delete
                     </button>
                     <a class="btn btn-dark mt-3" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit
                         Blog</a>
                     {% endif %}
+
                     <!-- Modal -->
                     <div aria-hidden="true" aria-labelledby="blogModalLabel{{ blog.blog_id }}" class="modal fade"
-                         id="deleteBlog{{ blog.blog_id }}"
-                         role="dialog" tabindex="-1">
+                         id="deleteBlog{{ blog.blog_id }}" role="dialog" tabindex="-1">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -72,10 +76,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Image Column -->
-                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                    <img alt="Thumbnail" class="img-fluid" src="{{ blog.img_url }}" style="width: 100%; height: auto;">
                 </div>
             </div>
         </div>
