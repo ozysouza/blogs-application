@@ -33,19 +33,19 @@
                         <h3 class="mb-0">{{ blog.title }}</h3>
                         <span class="mb-1 text-muted">{{ blog.date }}</span>
                         <p class="card-text mb-auto">{{ blog.subtitle }}</p>
-                        <a href="{{ url_for('views.find_blog', blog_id=blog.id) }}" class="d-block mt-2 mb-2">Continue reading</a>
+                        <a href="{{ url_for('views.find_blog', blog_id=blog.blog_id) }}" class="d-block mt-2 mb-2">Continue reading</a>
                         {% if current_user.is_authenticated %}
-                        <button type="button" class="btn btn-danger mt-2 align-self-start" data-bs-toggle="modal" data-bs-target="#deleteBlog{{ blog.id }}">
+                        <button type="button" class="btn btn-danger mt-2 align-self-start" data-bs-toggle="modal" data-bs-target="#deleteBlog{{ blog.blog_id }}">
                             Delete
                         </button>
                         {% endif %}
                         <!-- Modal -->
-                        <div class="modal fade" id="deleteBlog{{ blog.id }}" tabindex="-1" role="dialog"
-                             aria-labelledby="blogModalLabel{{ blog.id }}" aria-hidden="true">
+                        <div class="modal fade" id="deleteBlog{{ blog.blog_id }}" tabindex="-1" role="dialog"
+                             aria-labelledby="blogModalLabel{{ blog.blog_id }}" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteBlogLabel{{ blog.id }}">Delete Blog?</h5>
+                                        <h5 class="modal-title" id="deleteBlogLabel{{ blog.blog_id }}">Delete Blog?</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" onclick="window.location.href='{{ url_for('views.delete_blog', blog_id=blog.id) }}'">Delete Blog</button>
+                                        <button type="button" class="btn btn-danger" onclick="window.location.href='{{ url_for('views.delete_blog', blog_id=blog.blog_id) }}'">Delete Blog</button>
                                     </div>
                                 </div>
                             </div>

@@ -33,7 +33,7 @@
                 <img src="{{ blog.img_url }}">
                 <p>{{ blog.body | safe }}</p>
                 {% if current_user.is_authenticated %}
-                <a class="btn btn-dark float-right" href="{{ url_for('views.edit_blog', blog_id=blog.id) }}"> Edit Blog</a>
+                <a class="btn btn-dark float-right" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit Blog</a>
                 {% endif %}
             </div>
         </div>
