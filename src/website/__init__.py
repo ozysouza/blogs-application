@@ -1,7 +1,6 @@
 import os
 
 from flask import render_template, abort
-from flask_ckeditor import CKEditor
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from src.helpers.forms import LoginForm
@@ -14,8 +13,7 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
 
     # TODO: Fix the ckeditor to use the newest version
-    # Initialize CKEditor and Bootstrap
-    CKEditor(app)
+    # Initialize Bootstrap
     Bootstrap5(app)
 
     # Register Blueprints

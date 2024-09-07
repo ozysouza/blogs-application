@@ -52,6 +52,8 @@
     {% from 'form_helper.html' import displayField, displayFlaskMessage with context %}
 
     <title>{% block title %}{% endblock %}</title>
+    <!-- Include CKEditor 5 from CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
 </head>
 <body>
 <header role="banner">
@@ -190,5 +192,7 @@
 </script>
 <!-- Core theme JS-->
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<!-- Import the Custom JavaScript File -->
+<script src="{{ url_for('static', filename='js/ckeditor-config.js') }}"></script>
 </body>
 </html>

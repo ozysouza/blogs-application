@@ -27,14 +27,24 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                {{ displayFlaskMessage() }}
-                <div class="my-5" id="editor">
-                    {{ blog_form.csrf_token }}
-                    {{ render_form(blog_form) }}
-                </div>
+                <form action="{{ url_for('views.new_blog') }}" method="POST">
+                    {{ displayFlaskMessage() }}
+                    <div class="my-5">
+                        {{ blog_form.csrf_token }}
+                        {{ displayField(blog_form.title, 'Blog Title', autocomplete="off", autofocus=true) }}
+                        {{ displayField(blog_form.subtitle, 'Blog Subtitle', autocomplete="off", autofocus=true) }}
+                        {{ displayField(blog_form.img_url, 'Blog Image URL') }}
+
+                        <!-- TextAreaField for CKEditor 5 -->
+                        <div class="mb-3">
+                            <label class="form-label required-field">Blog Content</label>
+                            {{ blog_form.content(class="form-control", id="ckeditor") }}
+                        </div>
+
+                        {{ blog_form.submit_button(class="btn btn-dark") }}
+                    </div>
+                </form>
             </div>
-            {{ ckeditor.load() }}
-            {{ ckeditor.config(name='Content') }}
         </div>
     </div>
 </main>

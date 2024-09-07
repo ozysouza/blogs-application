@@ -1,5 +1,4 @@
 from flask_wtf import FlaskForm
-from flask_ckeditor import CKEditorField
 from wtforms import StringField, TextAreaField, EmailField, ValidationError, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
@@ -37,7 +36,7 @@ class CreateBlogForm(FlaskForm):
     title = StringField('Blog Title', validators=[DataRequired(message='Blog Title is required.')])
     subtitle = StringField('Subtitle', validators=[DataRequired(message='Subtitle is required.')])
     img_url = StringField('Blog Image URL', validators=[DataRequired(message='Image URL is required.')])
-    content = CKEditorField('Content', validators=[DataRequired(message='Text is required.')])
+    content = TextAreaField('Blog Content', validators=[DataRequired(message='Text is required.')])
     submit_button = SubmitField('Submit Blog')
 
 
