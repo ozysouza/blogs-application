@@ -27,10 +27,12 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <form action="{{ url_for('views.new_blog') }}" method="POST">
+                {% set form_action = url_for('views.edit_blog') if is_edit else url_for('views.new_blog') %}
+                <form action="{{ form_action }}" method="POST" novalidate>
                     {{ displayFlaskMessage() }}
                     <div class="my-5">
                         {{ blog_form.csrf_token }}
+                        {{ blog_form.blog_id() }}
                         {{ displayField(blog_form.title, 'Blog Title', autocomplete="off", autofocus=true) }}
                         {{ displayField(blog_form.subtitle, 'Blog Subtitle', autocomplete="off", autofocus=true) }}
                         {{ displayField(blog_form.img_url, 'Blog Image URL') }}

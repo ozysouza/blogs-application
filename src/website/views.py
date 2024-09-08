@@ -78,14 +78,23 @@ def edit_blog() -> Response | str:
     # Ensure login_form is available for all routes.
     login_form = LoginForm()
 
-    blog_id = request.args.get('blog_id')
+    blog_id = request.args.get('blog_id') if request.method == 'GET' else None
     requested_blog = blogs_manager.get_by_id(blog_id)
+
+    edit_form = CreateBlogForm()
+    if request.method == 'POST':
+        # Get blog_id from form data during POST
+        blog_id = edit_form.blog_id.data
+        requested_blog = blogs_manager.get_by_id(blog_id)
+
     try:
         if requested_blog:
-            edit_form = CreateBlogForm(title=requested_blog.title,
-                                       subtitle=requested_blog.subtitle,
-                                       img_url=requested_blog.img_url,
-                                       content=requested_blog.body)
+            edit_form = CreateBlogForm(
+                blog_id=blog_id,
+                title=requested_blog.title,
+                subtitle=requested_blog.subtitle,
+                img_url=requested_blog.img_url,
+                content=requested_blog.body)
 
             if edit_form.validate_on_submit():
                 blogs_manager.update(
@@ -179,5 +188,5 @@ def new_blog() -> Response | str:
                               blog_form.content.data)
             return redirect(url_for('views.home_page'))
     except Exception as err:
-        logger.error(f'Failed to add movie due: {err}')
+        logger.error(f'Failed to add blog due: {err}')
     return render_template("new_blog.html", blog_form=blog_form, login_form=login_form)

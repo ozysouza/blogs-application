@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, EmailField, ValidationError, SubmitField, PasswordField
+from wtforms import StringField, TextAreaField, EmailField, ValidationError, SubmitField, PasswordField, HiddenField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 import phonenumbers
@@ -33,6 +33,7 @@ class ContactForm(FlaskForm):
 
 class CreateBlogForm(FlaskForm):
     """ Blog Form """
+    blog_id = HiddenField('Blog ID')
     title = StringField('Blog Title', validators=[DataRequired(message='Blog Title is required.')])
     subtitle = StringField('Subtitle', validators=[DataRequired(message='Subtitle is required.')])
     img_url = StringField('Blog Image URL', validators=[DataRequired(message='Image URL is required.')])
