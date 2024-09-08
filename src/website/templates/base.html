@@ -43,17 +43,12 @@
             rel="stylesheet"
             type="text/css"
     />
-    <link href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css"
-          rel="stylesheet"
-    />
-
+    <link href="https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.css" rel="stylesheet"/>
     {% endblock %}
 
     {% from 'form_helper.html' import displayField, displayFlaskMessage with context %}
 
     <title>{% block title %}{% endblock %}</title>
-    <!-- Include CKEditor 5 from CDN -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
 </head>
 <body>
 <header role="banner">
@@ -192,7 +187,15 @@
 </script>
 <!-- Core theme JS-->
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-<!-- Import the Custom JavaScript File -->
-<script src="{{ url_for('static', filename='js/ckeditor-config.js') }}"></script>
+<!-- Import map to load CKEditor dependencies -->
+<script type="importmap">
+    {
+        "imports": {
+            "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.js",
+            "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.1.0/"
+        }
+    }
+</script>
+<script src="{{ url_for('static', filename='js/ckeditor-config.js') }}" type="module"></script>
 </body>
 </html>

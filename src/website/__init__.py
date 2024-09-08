@@ -12,7 +12,6 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
 
-    # TODO: Fix the ckeditor to use the newest version
     # Initialize Bootstrap
     Bootstrap5(app)
 
