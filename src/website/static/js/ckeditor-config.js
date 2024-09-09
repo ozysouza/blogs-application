@@ -1,40 +1,80 @@
 import {
+    BlockQuote,
+    Bold,
     ClassicEditor,
     Essentials,
-    Bold,
-    Italic,
     Font,
-    Paragraph,
-    Undo,
     Heading,
+    Italic,
+	Image,
+	ImageCaption,
+	ImageStyle,
+	ImageToolbar,
+	ImageInsert,
+	ImageUpload,
+	ImageResize,
     Link,
     List,
-    BlockQuote,
     MediaEmbed,
+    Paragraph,
     Table,
     TableToolbar,
+    Undo
 } from 'ckeditor5';
 
-// Initialize CKEditor with the desired plugins and toolbar items
 document.addEventListener('DOMContentLoaded', function () {
     ClassicEditor
         .create(document.querySelector('#ckeditor'), {
             plugins: [
-                Essentials, Bold, Italic, Font, Paragraph, Undo, Heading, Link, List,
-                BlockQuote, MediaEmbed, Table, TableToolbar
+                Essentials, Bold, Italic, Image, ImageInsert, ImageToolbar, ImageStyle, ImageCaption, ImageResize,
+                Font, Paragraph, Undo, Heading, Link, List, BlockQuote, MediaEmbed, Table, TableToolbar
             ],
             toolbar: {
                 items: [
-                    'undo', 'redo', 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|', 'mediaEmbed', '|',
-                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells'
+                    'undo', 'redo', 'heading',
+                    '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote',
+                    '|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+                    '|', 'imageInsert',
+                    '|', 'mediaEmbed',
+                    '|','insertTable', 'tableColumn', 'tableRow', 'mergeTableCells'
                 ]
+            },
+            image: {
+                toolbar: [
+                    'toggleImageCaption',
+                    'imageTextAlternative',
+                    '|',
+                    'imageStyle:inline',
+                    'imageStyle:block',
+                    'imageStyle:wrapText',
+                    '|',
+                    'resizeImage:25',
+                    'resizeImage:50',
+                    'resizeImage:original',
+                ],
+                resizeOptions: [
+                    {
+                        name: 'resizeImage:original',
+                        value: null,
+                        icon: 'original'
+                    },
+                    {
+                        name: 'resizeImage:25',
+                        value: '25',
+                        icon: 'small'
+                    },
+                    {
+                        name: 'resizeImage:50',
+                        value: '50',
+                        icon: 'medium'
+                    }
+                ],
+                resizeUnit: '%'
             },
             language: 'en',
             table: {
                 contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
             },
-            licenseKey: '',
         })
         .then(ckeditor => {
             console.log('Editor was initialized', ckeditor);
