@@ -20,7 +20,7 @@ class ContactForm(FlaskForm):
 
     # TODO: Add countries flags with the code
     @staticmethod
-    def validate_number(number):
+    def validate_number(self, number):
         if len(number.data) > 16:
             raise ValidationError('Invalid phone number.')
         try:
