@@ -13,7 +13,7 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
 
     # Directory to save uploaded images from CKEditor
-    app.config['UPLOAD_FOLDER'] = 'website/static/uploads'
+    app.config['UPLOAD_FOLDER'] = 'website/static/uploads/users/'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     # Initialize Bootstrap
