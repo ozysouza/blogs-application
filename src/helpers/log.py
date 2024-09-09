@@ -40,7 +40,7 @@ class Log:
         # Create and configure console handler
         console_handler = logging.StreamHandler()
         console_handler.setLevel(self.console_level)
-        console_format = logging.Formatter('%(levelname)s %(asctime)s - %(message)s', datefmt='%H:%M:%S')
+        console_format = logging.Formatter('%(levelname)s %(asctime)s - %(message)s', datefmt='%d/%b/%Y - %H:%M:%S')
         console_handler.setFormatter(console_format)
 
         # Ensure the log directory exists
