@@ -3,6 +3,31 @@ from flask_login import UserMixin
 
 
 @dataclass
+class Blog:
+    """
+    Blog class representing a blog entry in the application.
+
+    Attributes:
+        blog_id (int): The unique identifier for the blog.
+        title (str): The title of the blog.
+        subtitle (str): The subtitle of the blog.
+        date (datetime): The date the blog was created or published.
+        author (str): The author of the blog. This can be enhanced to store the user object.
+        img_url (str): The URL to the image associated with the blog.
+        body (str): The main content of the blog.
+        user_id (int): The ID of the user who created the blog.
+    """
+    blog_id: int
+    title: str
+    subtitle: str
+    date: str
+    author: str
+    img_url: str
+    body: str
+    user_id: int
+
+
+@dataclass
 class User(UserMixin):
     """
     User class representing a user entity in the application.
@@ -29,28 +54,3 @@ class User(UserMixin):
             return str(self.user_id)
         except AttributeError:
             raise NotImplementedError("No `id` attribute - override `get_id`") from None
-
-
-@dataclass
-class Blog:
-    """
-    Blog class representing a blog entry in the application.
-
-    Attributes:
-        blog_id (int): The unique identifier for the blog.
-        title (str): The title of the blog.
-        subtitle (str): The subtitle of the blog.
-        date (datetime): The date the blog was created or published.
-        author (str): The author of the blog. This can be enhanced to store the user object.
-        img_url (str): The URL to the image associated with the blog.
-        body (str): The main content of the blog.
-        user_id (int): The ID of the user who created the blog.
-    """
-    blog_id: int
-    title: str
-    subtitle: str
-    date: str
-    author: str
-    img_url: str
-    body: str
-    user_id: int

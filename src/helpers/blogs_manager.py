@@ -26,4 +26,3 @@ class BlogsManager(MysqlManager):
 
     def update(self, blog_id: str, title: str, subtitle: str, img_url: str, body: str) -> bool:
         return self.update_blog(blog_id, title, subtitle, img_url, body)
-

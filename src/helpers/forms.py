@@ -41,6 +41,16 @@ class CreateBlogForm(FlaskForm):
     submit_button = SubmitField('Submit Blog')
 
 
+class LoginForm(FlaskForm):
+    """Sign in Form"""
+    email = EmailField('Email', validators=[DataRequired(),
+                                            Email(message='Email is not valid.'),
+                                            Length(min=6, max=25, message='Email must be between 6 and 25 characters')])
+    password = PasswordField('Password', validators=[DataRequired(message='Password is required.'),
+                                                     Length(min=6, max=25)])
+    submit_button = SubmitField('Sign In')
+
+
 class RegisterForm(FlaskForm):
     """ Registration Form """
     firstname = StringField('First Name', validators=[DataRequired(message='First Name is required.'),
@@ -58,13 +68,3 @@ class RegisterForm(FlaskForm):
                                                  EqualTo('password',
                                                          message='Passwords must match.')])
     submit_button = SubmitField('Create Account')
-
-
-class LoginForm(FlaskForm):
-    """Sign in Form"""
-    email = EmailField('Email', validators=[DataRequired(),
-                                            Email(message='Email is not valid.'),
-                                            Length(min=6, max=25, message='Email must be between 6 and 25 characters')])
-    password = PasswordField('Password', validators=[DataRequired(message='Password is required.'),
-                                                     Length(min=6, max=25)])
-    submit_button = SubmitField('Sign In')

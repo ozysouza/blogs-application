@@ -203,7 +203,7 @@ class MysqlManager:
         """
         try:
             query = 'SELECT * FROM users WHERE user_id = %s'
-            self.mycursor.execute(query, (user_id, ))
+            self.mycursor.execute(query, (user_id,))
             result = self.mycursor.fetchone()
             if result:
                 columns = [desc[0] for desc in self.mycursor.description]
