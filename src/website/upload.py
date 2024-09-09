@@ -1,4 +1,5 @@
 from flask import request, jsonify, Blueprint, url_for, current_app
+from flask_login import login_required
 from werkzeug.utils import secure_filename
 import os
 
@@ -8,6 +9,7 @@ upload = Blueprint('upload', __name__)
 
 
 @upload.route('/upload-image', methods=['GET', 'POST'])
+@login_required
 def upload_image():
     if 'upload' not in request.files:
         return jsonify({"error": "No file part"}), 400
