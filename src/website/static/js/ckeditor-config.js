@@ -11,7 +11,6 @@ import {
 	ImageStyle,
 	ImageToolbar,
 	ImageInsert,
-	ImageUpload,
 	ImageResize,
     Link,
     List,
@@ -19,6 +18,7 @@ import {
     Paragraph,
     Table,
     TableToolbar,
+    SimpleUploadAdapter,
     Undo
 } from 'ckeditor5';
 
@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
     ClassicEditor
         .create(document.querySelector('#ckeditor'), {
             plugins: [
-                Essentials, Bold, Italic, Image, ImageInsert, ImageToolbar, ImageStyle, ImageCaption, ImageResize,
-                Font, Paragraph, Undo, Heading, Link, List, BlockQuote, MediaEmbed, Table, TableToolbar
+                Bold, BlockQuote, Essentials, Font, Heading, Italic, Image, ImageCaption, ImageInsert, ImageResize, ImageStyle, ImageToolbar,
+                Link, List, MediaEmbed, Paragraph, Table, TableToolbar, SimpleUploadAdapter, Undo
             ],
             toolbar: {
                 items: [
@@ -71,10 +71,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 ],
                 resizeUnit: '%'
             },
-            language: 'en',
             table: {
                 contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
             },
+            simpleUpload: {
+                uploadUrl: '/upload-image',
+            },
+             language: 'en',
         })
         .then(ckeditor => {
             console.log('Editor was initialized', ckeditor);

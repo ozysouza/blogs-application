@@ -166,7 +166,6 @@ def inject_year():
     return {'year': datetime.today().strftime('%Y')}
 
 
-# TODO: The nav is not responsive when downsizing the page and fix it, do better!
 @views.route("/new-blog", methods=['GET', 'POST', 'PATCH'])
 @login_required
 def new_blog() -> Response | str:
