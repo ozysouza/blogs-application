@@ -31,10 +31,10 @@ def register_user():
             first_name = register_form.firstname.data
             last_name = register_form.lastname.data
 
-            if user_manager.get_user_by_email(email):
+            if user_manager.get_by_email(email):
                 flash('Email is already registered.', 'danger')
             else:
-                user_manager.add_user(email, first_name, last_name, hashed_password)
+                user_manager.add(email, first_name, last_name, hashed_password)
                 flash('Account created!', 'success')
                 return redirect(url_for('auth.register_user'))
         except Exception as err:
@@ -53,7 +53,7 @@ def login():
 
     if login_form.validate_on_submit():
         # Retrieve user by email and returns a User instance
-        user = user_manager.get_user_by_email(login_form.email.data)
+        user = user_manager.get_by_email(login_form.email.data)
         if user:
             if check_password_hash(user.password, login_form.password.data):
                 login_user(user, remember=True)

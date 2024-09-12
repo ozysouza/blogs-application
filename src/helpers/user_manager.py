@@ -19,7 +19,7 @@ class UserManager(MysqlManager):
         Returns:
             bool: True if the user is successfully added to the database, False otherwise.
         """
-        return self.add_user(email, first_name, last_name, hashed_password)
+        return self.sql_add_user(email, first_name, last_name, hashed_password)
 
     def get_by_email(self, email: str) -> User | None:
         """
@@ -31,7 +31,7 @@ class UserManager(MysqlManager):
         Returns:
             User | None: An instance of the User class if the user is found, or None if the user does not exist.
         """
-        user_data = self.get_user_by_email(email)
+        user_data = self.sql_get_user_by_email(email)
         if user_data:
             return user_data
         return None
@@ -46,7 +46,7 @@ class UserManager(MysqlManager):
         Returns:
             User | None: An instance of the User class if the user is found, or None if the user does not exist.
         """
-        user_data = self.get_user_by_id(user_id)
+        user_data = self.sql_get_user_by_id(user_id)
         if user_data:
             return user_data
         return None

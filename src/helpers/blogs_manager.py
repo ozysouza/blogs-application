@@ -13,16 +13,16 @@ class BlogsManager(MysqlManager):
         date = datetime.today().strftime("%d/%m/%Y")
         author = f"{current_user.first_name} {current_user.last_name}"
         user_id = current_user.get_id()
-        return self.add_blog(title, subtitle, date, author, img_url, body, user_id)
+        return self.sql_add_blog(title, subtitle, date, author, img_url, body, user_id)
 
     def delete(self, blog_id) -> bool:
-        return self.delete_blog(blog_id)
+        return self.sql_delete_blog(blog_id)
 
     def get_all(self) -> list[dict] | None:
-        return self.get_all_blogs()
+        return self.sql_get_all_blogs()
 
     def get_by_id(self, blog_id: str) -> Blog | None:
-        return self.get_blog_by_id(blog_id)
+        return self.sql_get_blog_by_id(blog_id)
 
     def update(self, blog_id: str, title: str, subtitle: str, img_url: str, body: str) -> bool:
-        return self.update_blog(blog_id, title, subtitle, img_url, body)
+        return self.sql_update_blog(blog_id, title, subtitle, img_url, body)

@@ -194,7 +194,7 @@ class MysqlManager:
             self.logger.error(f'Failed when adding comment into database:: {err}')
             return False
 
-    def add_user(self, email: str, first_name: str, last_name: str, password: str) -> bool:
+    def sql_add_user(self, email: str, first_name: str, last_name: str, password: str) -> bool:
         """
         Insert the user into the database.
         Args:
@@ -217,7 +217,7 @@ class MysqlManager:
             self.logger.error(f'Failed when add user into database: {err}')
             return False
 
-    def get_user_by_email(self, email: str) -> User | None:
+    def sql_get_user_by_email(self, email: str) -> User | None:
         """
         Retrieve a user by their email from the database and return a User instance.
 
@@ -242,7 +242,7 @@ class MysqlManager:
             self.logger.error(f'Failed to retrieve user: {err}')
             return None
 
-    def get_user_by_id(self, user_id: int) -> User | None:
+    def sql_get_user_by_id(self, user_id: int) -> User | None:
         """
         Retrieve a user by their id from the database and return a User instance.
 
@@ -267,7 +267,7 @@ class MysqlManager:
             self.logger.error(f'Failed to retrieve user: {err}')
             return None
 
-    def add_blog(self, title: str, subtitle: str, date: str, author: str, img_url, body, user_id: int) -> bool:
+    def sql_add_blog(self, title: str, subtitle: str, date: str, author: str, img_url, body, user_id: int) -> bool:
         """
         Insert the blog into the database.
         Args:
@@ -293,7 +293,7 @@ class MysqlManager:
             self.logger.error(f"Error when adding blog into database: {err}")
             return False
 
-    def delete_blog(self, blog_id: str) -> bool:
+    def sql_delete_blog(self, blog_id: str) -> bool:
         """
         Delete specific blog in the database.
         Args:
@@ -311,7 +311,7 @@ class MysqlManager:
             self.logger.error(f'Error when deleting: {err}')
             return False
 
-    def get_all_blogs(self) -> list[dict] | None:
+    def sql_get_all_blogs(self) -> list[dict] | None:
         """
         Retrieve the blogs from the database table.
 
@@ -334,7 +334,7 @@ class MysqlManager:
             self.logger.error(f'Error retrieving the table data: {err}')
             return None
 
-    def get_blog_by_id(self, blog_id: str) -> Blog | None:
+    def sql_get_blog_by_id(self, blog_id: str) -> Blog | None:
         """
         Retrieve a specific blog by id from the database table.
 
@@ -360,7 +360,7 @@ class MysqlManager:
             self.logger.error(f'Error retrieving the table data: {err}')
             return None
 
-    def update_blog(self, blog_id: str, title: str, subtitle: str, img_url, body: str) -> bool:
+    def sql_update_blog(self, blog_id: str, title: str, subtitle: str, img_url, body: str) -> bool:
         """
         Update specific blog in the database.
         Args:
