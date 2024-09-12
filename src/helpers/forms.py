@@ -5,6 +5,13 @@ from wtforms.validators import DataRequired, Email, Length, EqualTo
 import phonenumbers
 
 
+class CommentForm(FlaskForm):
+    """Comment Form"""
+    comment = TextAreaField('Comment', validators=[DataRequired(message='This field is required to submit a comment.'),
+                                                   Length(min=3, max=50,
+                                                          message='There is a limit of 3 and 50 characters')])
+    submit_button = SubmitField('Submit Comment')
+
 class ContactForm(FlaskForm):
     """ Contact Form """
     username = StringField('Name',
