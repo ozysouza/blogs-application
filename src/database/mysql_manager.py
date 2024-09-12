@@ -172,6 +172,28 @@ class MysqlManager:
             self.logger.error(f'Error setting up tables: {err}')
             return False
 
+    def sql_add_comment(self, user_id: int, blog_id: int, comment: str) -> bool:
+        """
+        Insert a comment on specific blog.
+        Args:
+            user_id (int): User id who made the comment.
+            blog_id (int): Blog's id where the user made the comment.
+            comment (str): Comment text.
+        Returns:
+            Boolean
+        """
+        try:
+            self.mycursor.execute(f'USE {self.db_name}')
+            query = ('INSERT INTO comments (user_id, blog_id, text)'
+                     'VALUES (%s, %s, %s)')
+            self.mycursor.execute(query, (user_id, blog_id, comment))
+            self.myconnection.commit()
+            self.logger.info('Comment successfully inserted into database.')
+            return True
+        except mysql.Error as err:
+            self.logger.error(f'Failed when adding comment into database:: {err}')
+            return False
+
     def add_user(self, email: str, first_name: str, last_name: str, password: str) -> bool:
         """
         Insert the user into the database.
