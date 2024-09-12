@@ -36,6 +36,17 @@
                 <a class="btn btn-dark float-right" href="{{ url_for('views.edit_blog', blog_id=blog.blog_id) }}">Edit
                     Blog</a>
                 {% endif %}
+
+                {% if current_user.is_authenticated %}
+                <hr>
+                <form action="{{ url_for('views.comment_blog') }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label required-field fs-2">Comment</label>
+                        {{ comments_form.comment(class="form-control", id="ckeditor") }}
+                        {{ comments_form.submit_button(class="btn btn-dark mt-4") }}
+                    </div>
+                </form>
+                {% endif %}
             </div>
         </div>
     </div>
