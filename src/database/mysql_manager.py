@@ -55,6 +55,7 @@ class MysqlManager:
                 # Verify if the tables exists, if not create it
                 self._setup_users_table()
                 self._setup_blogs_table()
+                self._setup_comments_table()
 
                 # Set the instance to this object to maintain a single connection
                 MysqlManager.__connection_instance = self
@@ -138,6 +139,34 @@ class MysqlManager:
                 self.logger.info('Table "blogs" created.')
             else:
                 self.logger.info('Table "blogs" already exists.')
+            return True
+        except mysql.Error as err:
+            self.logger.error(f'Error setting up tables: {err}')
+            return False
+
+    def _setup_comments_table(self) -> bool:
+        """
+            Check if the required comments table exist, and create them if they don't.
+        :return:
+            bool
+        """
+        try:
+            self.mycursor.execute(f'SHOW TABLES LIKE "comments"')
+            result = self.mycursor.fetchone()
+            if not result:
+                self.mycursor.execute("""
+                    CREATE TABLE comments (
+                        comment_id INT AUTO_INCREMENT PRIMARY KEY,
+                        user_id INT,
+                        blog_id INT,
+                        text TEXT NOT NULL,
+                        FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+                        FOREIGN KEY (blog_id) REFERENCES blogs(blog_id) ON DELETE CASCADE
+                    )
+                """)
+                self.logger.info('Table "comments" created.')
+            else:
+                self.logger.info('Table "comments" already exists.')
             return True
         except mysql.Error as err:
             self.logger.error(f'Error setting up tables: {err}')
