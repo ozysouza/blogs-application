@@ -231,7 +231,8 @@ class MysqlManager:
                      'comments.text, '
                      'comments.blog_id, '
                      'users.first_name, '
-                     'users.last_name '
+                     'users.last_name, '
+                     'users.user_id '
                      'FROM comments '
                      'JOIN users on comments.user_id = users.user_id '
                      'WHERE blog_id = %s '
@@ -341,6 +342,24 @@ class MysqlManager:
             return True
         except mysql.Error as err:
             self.logger.error(f'Error when deleting: {err}')
+            return False
+
+    def sql_delete_comment_by_id(self, comment_id: int, ) -> bool:
+        """
+        Delete specific comment on the blogs by its ID.
+        Args:
+            comment_id (int): The id of the comment.
+        Returns:
+            bool
+        """
+        try:
+            query = "DELETE FROM comments WHERE comment_id = %s"
+            self.mycursor.execute(query, (comment_id,))
+            self.myconnection.commit()
+            self.logger.info(f'Comment successfully deleted')
+            return True
+        except mysql.Error as err:
+            self.logger.error(f'Error deleting the comment {err}')
             return False
 
     def sql_get_all_blogs(self) -> list[dict] | None:

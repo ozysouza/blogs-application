@@ -21,6 +21,9 @@ class BlogsManager(MysqlManager):
     def delete(self, blog_id: str) -> bool:
         return self.sql_delete_blog(blog_id)
 
+    def delete_comment(self, comment_id: int) -> bool:
+        return self.sql_delete_comment_by_id(comment_id)
+
     def get_all(self) -> list[dict] | None:
         return self.sql_get_all_blogs()
 

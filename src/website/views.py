@@ -121,6 +121,16 @@ def delete_blog(blog_id):
     return redirect(url_for('views.home_page'))
 
 
+@views.route("/delete-comment/<int:comment_id>", methods=['GET', 'POST'])
+@login_required
+def delete_comment(comment_id):
+    if blogs_manager.delete_comment(comment_id):
+        flash('Comment deleted successfully!', 'success')
+    else:
+        flash('Failed to delete comment.', 'danger')
+    return redirect(request.referrer)
+
+
 @views.route("/edit-blog", methods=['GET', 'POST'])
 @login_required
 def edit_blog() -> Response | str:
