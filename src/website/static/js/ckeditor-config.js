@@ -86,3 +86,26 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('There was a problem initializing the editor.', error);
         });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    ClassicEditor
+        .create(document.querySelector('#commentCkeditor'), {
+            plugins: [
+                Bold, BlockQuote, Essentials, Font, Heading, Italic
+            ],
+            toolbar: {
+                items: [
+                    'undo', 'redo', 'heading',
+                    '|', 'bold', 'italic', 'link', 'blockQuote'
+                ]
+            },
+             language: 'en',
+        })
+        .then(ckeditor => {
+            console.log('Editor was initialized', ckeditor);
+        })
+        .catch(error => {
+            console.error('There was a problem initializing the editor.', error);
+        });
+});
+
