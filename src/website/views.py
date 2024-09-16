@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
-from flask_login import login_required, current_user
+from flask_login import login_required
 from werkzeug import Response
 from datetime import datetime
 
 from src.helpers.blogs_manager import BlogsManager
 from src.helpers.mail_manager import MailManager
 from src.helpers.log import Log
-from src.helpers.forms import ContactForm, CreateBlogForm, LoginForm
+from src.helpers.forms import ContactForm, CreateBlogForm, LoginForm, CommentForm
 
 # Setup logging
 logger = Log().logger
@@ -55,6 +55,30 @@ def add_blog() -> Response | str:
     except Exception as err:
         logger.error(f'Failed to add blog due: {err}')
     return render_template("add_blog.html", blog_form=blog_form, login_form=login_form)
+
+
+@views.route("/add-comment/<int:blog_id>", methods=['GET', 'POST'])
+@login_required
+def add_comment(blog_id) -> Response | str:
+    """
+    Add a comment into user's blog.
+
+    Returns:
+        str: Reloads the page and renders the new comment.
+    """
+    comment_form = CommentForm()
+
+    if comment_form.validate_on_submit():
+        try:
+            comment = comment_form.comment.data
+            blogs_manager.add_comment(blog_id, comment)
+            flash('Comment successfully submitted.', 'success')
+            return redirect(request.referrer)
+        except Exception as err:
+            logger.error(f'Failed to add comment: {err}')
+            flash('Failed submitting comment. Please try again.')
+            return redirect(request.referrer)
+    return render_template("display_blog.html", comment_form=comment_form)
 
 
 @views.route("/contact", methods=['GET', 'POST'])
@@ -150,6 +174,7 @@ def find_blog() -> Response | str:
     """
     # Ensure login_form is available for all routes.
     login_form = LoginForm()
+    comment_form = CommentForm()
 
     blog_id = request.args.get('blog_id')
     try:
@@ -160,7 +185,7 @@ def find_blog() -> Response | str:
     except Exception as err:
         logger.error(f"Failed to fetch blog post: {err}")
         return redirect(url_for('views.home_page'))
-    return render_template("display_blog.html", blog=requested_blog, login_form=login_form)
+    return render_template("display_blog.html", blog=requested_blog, login_form=login_form, comment_form=comment_form)
 
 
 @views.route("/")

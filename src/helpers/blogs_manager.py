@@ -15,7 +15,10 @@ class BlogsManager(MysqlManager):
         user_id = current_user.get_id()
         return self.sql_add_blog(title, subtitle, date, author, img_url, body, user_id)
 
-    def delete(self, blog_id) -> bool:
+    def add_comment(self, blog_id: int, comment: str) -> bool:
+        return self.sql_add_comment(current_user.get_id(), blog_id, comment)
+
+    def delete(self, blog_id: str) -> bool:
         return self.sql_delete_blog(blog_id)
 
     def get_all(self) -> list[dict] | None:

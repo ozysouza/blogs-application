@@ -43,10 +43,10 @@
                     {{ displayFlaskMessage() }}
                     <div class="mb-3">
                         <label class="form-label required-field fs-2">Comment</label>
-                        {{ comments_form.csrf_token }}
-                        {{ comments_form.comment(class="form-control", id="commentCkeditor") }}
+                        {{ comment_form.csrf_token }}
+                        {{ comment_form.comment(class="form-control", id="commentCkeditor") }}
                     </div>
-                    {{ comments_form.submit_button(class="btn btn-dark mt-4") }}
+                    {{ comment_form.submit_button(class="btn btn-dark mt-4") }}
                 </form>
                 {% endif %}
             </div>
