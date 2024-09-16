@@ -32,6 +32,31 @@ def about_page() -> Response | str:
     return render_template('about.html', login_form=login_form)
 
 
+@views.route("/add-blog", methods=['GET', 'POST', 'PATCH'])
+@login_required
+def add_blog() -> Response | str:
+    """
+    Renders the page to create a new blog.
+
+    Returns:
+        str: The rendered HTML template for the create blog page.
+    """
+    # Ensure login_form is available for all routes.
+    login_form = LoginForm()
+
+    blog_form = CreateBlogForm()
+    try:
+        if blog_form.validate_on_submit():
+            blogs_manager.add(blog_form.title.data,
+                              blog_form.subtitle.data,
+                              blog_form.img_url.data,
+                              blog_form.content.data)
+            return redirect(url_for('views.home_page'))
+    except Exception as err:
+        logger.error(f'Failed to add blog due: {err}')
+    return render_template("add_blog.html", blog_form=blog_form, login_form=login_form)
+
+
 @views.route("/contact", methods=['GET', 'POST'])
 def contact_page() -> Response | str:
     """
@@ -111,7 +136,7 @@ def edit_blog() -> Response | str:
     except Exception as err:
         logger.error(f"Failed to fetch blog post: {err}")
         return redirect(url_for('views.home_page'))
-    return render_template("new_blog.html", blog_form=edit_form, blog=requested_blog, is_edit=True,
+    return render_template("add_blog.html", blog_form=edit_form, blog=requested_blog, is_edit=True,
                            login_form=login_form)
 
 
@@ -164,28 +189,3 @@ def home_page() -> Response | str:
 @views.context_processor
 def inject_year():
     return {'year': datetime.today().strftime('%Y')}
-
-
-@views.route("/new-blog", methods=['GET', 'POST', 'PATCH'])
-@login_required
-def new_blog() -> Response | str:
-    """
-    Renders the page to create a new blog.
-
-    Returns:
-        str: The rendered HTML template for the create blog page.
-    """
-    # Ensure login_form is available for all routes.
-    login_form = LoginForm()
-
-    blog_form = CreateBlogForm()
-    try:
-        if blog_form.validate_on_submit():
-            blogs_manager.add(blog_form.title.data,
-                              blog_form.subtitle.data,
-                              blog_form.img_url.data,
-                              blog_form.content.data)
-            return redirect(url_for('views.home_page'))
-    except Exception as err:
-        logger.error(f'Failed to add blog due: {err}')
-    return render_template("new_blog.html", blog_form=blog_form, login_form=login_form)
