@@ -49,6 +49,48 @@
                     {{ comment_form.submit_button(class="btn btn-dark mt-4") }}
                 </form>
                 {% endif %}
+                <hr>
+                <div class="comments">
+                    <ul class="list-unstyled">
+                        {% if comments %}
+                        {% for comment in comments %}
+                        <li class="d-flex align-items-start justify-content-between mb-4 p-3 border rounded bg-light">
+                            <!-- User Profile Image -->
+                            <img alt="profileUser" class="rounded-circle img-thumbnail mr-3"
+                                 src="../static/assets/images/default-profile.png" style="width: 60px; height: 60px;">
+                            <!-- Comment Text and Author -->
+                            <div class="ms-4">
+                                <p>{{ comment.text | safe }}</p>
+                                <small class="text-muted">Author: {{ comment.first_name }} {{ comment.last_name
+                                    }}</small>
+                            </div>
+                            <!-- Kebab menu -->
+                            <div class="dropdown ms-auto">
+                                <button aria-expanded="false" class="btn" data-bs-toggle="dropdown"
+                                        id="dropdownCommentMenu"
+                                        type="button">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul aria-labelledby="dropdownCommentMenu" class="dropdown-menu">
+                                    <li>
+                                        <button class="dropdown-item" type="button">Edit</button>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item"
+                                                onclick="window.location.href='{{ url_for('views.delete_comment', comment_id=comment.comment_id) }}'"
+                                                type="button">
+                                            Delete
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% else %}
+                        <li class="text-muted">No comments yet.</li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

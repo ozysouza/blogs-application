@@ -101,8 +101,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },
              language: 'en',
         })
-        .then(ckeditor => {
-            console.log('Editor was initialized', ckeditor);
+        .then(commentCkeditor => {
+            console.log('Editor was initialized', commentCkeditor);
         })
         .catch(error => {
             console.error('There was a problem initializing the editor.', error);

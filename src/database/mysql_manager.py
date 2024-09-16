@@ -217,6 +217,38 @@ class MysqlManager:
             self.logger.error(f'Failed when add user into database: {err}')
             return False
 
+    def sql_get_comments_by_blog(self, blog_id: int) -> list[dict] | None:
+        """
+         Retrieve the comments of all users on specific blog.
+         Args:
+             blog_id (int): Blog's id where the user made the comment.
+         Returns:
+             list[dict]
+         """
+        try:
+            query = ('SELECT '
+                     'comments.comment_id, '
+                     'comments.text, '
+                     'comments.blog_id, '
+                     'users.first_name, '
+                     'users.last_name '
+                     'FROM comments '
+                     'JOIN users on comments.user_id = users.user_id '
+                     'WHERE blog_id = %s '
+                     'ORDER BY comments.comment_id DESC ')
+            self.mycursor.execute(query, (blog_id,))
+            result = self.mycursor.fetchall()
+
+            if result:
+                columns = [desc[0] for desc in self.mycursor.description]
+                comments = [dict(zip(columns, row)) for row in result]
+                self.logger.info(f'Comments retrieved from blog id: {blog_id}')
+                return comments
+            return None
+        except mysql.Error as err:
+            self.logger.error(f'Error retrieving comments: {err}')
+            return None
+
     def sql_get_user_by_email(self, email: str) -> User | None:
         """
         Retrieve a user by their email from the database and return a User instance.

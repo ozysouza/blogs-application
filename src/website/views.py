@@ -179,13 +179,15 @@ def find_blog() -> Response | str:
     blog_id = request.args.get('blog_id')
     try:
         requested_blog = blogs_manager.get_by_id(blog_id)
+        requested_comments = blogs_manager.get_comments(int(blog_id))
         if not requested_blog:
             logger.warning(f"Blog with Id: {blog_id} not found.")
             return redirect(url_for('views.home_page'))
     except Exception as err:
         logger.error(f"Failed to fetch blog post: {err}")
         return redirect(url_for('views.home_page'))
-    return render_template("display_blog.html", blog=requested_blog, login_form=login_form, comment_form=comment_form)
+    return render_template("display_blog.html", blog=requested_blog, login_form=login_form, comment_form=comment_form,
+                           comments=requested_comments)
 
 
 @views.route("/")
