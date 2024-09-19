@@ -54,7 +54,7 @@
                     <ul class="list-unstyled">
                         {% if comments %}
                         {% for comment in comments %}
-                        <li class="d-flex align-items-start justify-content-between mb-4 p-3 border rounded bg-light">
+                        <li class="d-flex align-items-start justify-content-start mb-4 p-3 border rounded bg-light">
                             <!-- User Profile Image -->
                             <img alt="profileUser" class="rounded-circle img-thumbnail mr-3"
                                  src="../static/assets/images/default-profile.png" style="width: 60px; height: 60px;">
@@ -64,6 +64,7 @@
                                 <small class="text-muted">Author: {{ comment.first_name }} {{ comment.last_name
                                     }}</small>
                             </div>
+                            {% if current_user.is_authenticated and current_user.get_id() == comment.user_id|string %}
                             <!-- Kebab menu -->
                             <div class="dropdown ms-auto">
                                 <button aria-expanded="false" class="btn" data-bs-toggle="dropdown"
@@ -84,6 +85,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            {% endif %}
                         </li>
                         {% endfor %}
                         {% else %}
