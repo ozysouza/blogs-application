@@ -411,6 +411,32 @@ class MysqlManager:
             self.logger.error(f'Error retrieving the table data: {err}')
             return None
 
+    def sql_get_comment_by_id(self, comment_id: int) -> dict | None:
+        """
+        Retrieve a specific comment by id from the database table.
+
+        Args:
+            comment_id (int): The ID of the comment to retrieve.
+
+        Returns:
+            dict | None: A dictionary containing the comment details if found, otherwise None.
+        """
+        try:
+            sql = 'SELECT * FROM comments WHERE comment_id = %s'
+            self.mycursor.execute(sql, (comment_id,))
+            result = self.mycursor.fetchone()
+            if result:
+                # Get column names from cursor.description
+                columns = [desc[0] for desc in self.mycursor.description]
+                # Create a list of dict using column names
+                comment = dict(zip(columns, result))
+                return comment
+
+            return None
+        except mysql.Error as err:
+            self.logger.error(f'Error retrieving the table data: {err}')
+            return None
+
     def sql_update_blog(self, blog_id: str, title: str, subtitle: str, img_url, body: str) -> bool:
         """
         Update specific blog in the database.
@@ -436,4 +462,25 @@ class MysqlManager:
             return True
         except mysql.Error as err:
             self.logger.info(f'Error when updating blog: {err}')
+            return False
+
+    def sql_update_comment(self, comment_id: int, text: str) -> bool:
+        """
+        Update specific comment in the database.
+        :param comment_id: ID of the comment.
+        :param text: Updated text of the comment.
+        :return: bool
+        """
+        try:
+            query = '''
+                UPDATE comments 
+                SET text = %s 
+                WHERE comment_id = %s
+            '''
+            self.mycursor.execute(query, (text, comment_id))
+            self.myconnection.commit()
+            self.logger.info('Comment successfully updated into database.')
+            return True
+        except mysql.Error as err:
+            self.logger.error(f'Error when updating comment: {err}')
             return False
