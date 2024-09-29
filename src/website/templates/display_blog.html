@@ -57,7 +57,8 @@
                         <li class="d-flex align-items-start justify-content-start mb-4 p-3 border rounded bg-light">
                             <!-- User Profile Image -->
                             <img alt="profileUser" class="rounded-circle img-thumbnail mr-3"
-                                 src="../static/assets/images/default-profile.png" style="width: 60px; height: 60px;">
+                                 src="{{ url_for('static', filename='assets/images/default-profile.png') }}"
+                                 style="width: 60px; height: 60px;">
                             <!-- Comment Text and Author -->
                             <div class="ms-4">
                                 <p>{{ comment.text | safe }}</p>
