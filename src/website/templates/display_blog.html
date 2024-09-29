@@ -39,7 +39,9 @@
 
                 {% if current_user.is_authenticated %}
                 <hr>
-                <form action="{{ url_for('views.add_comment', blog_id=blog.blog_id) }}" method="POST" novalidate>
+                {% set form_action = url_for('views.edit_comment', blog_id=blog.blog_id,
+                comment_id=new_comment.comment_id) if is_edit else url_for('views.add_comment', blog_id=blog.blog_id) %}
+                <form action="{{ form_action }}" method="POST" novalidate>
                     {{ displayFlaskMessage() }}
                     <div class="mb-3">
                         <label class="form-label required-field fs-2">Comment</label>
@@ -61,7 +63,8 @@
                                  style="width: 60px; height: 60px;">
                             <!-- Comment Text and Author -->
                             <div class="ms-4">
-                                <p>{{ comment.text | safe }}</p>
+                                <p id="comment-text-{{ comment.comment_id }}">{{ comment.text | safe }}</p>
+                                <textarea class="form-control d-none" id="edit-comment-{{ comment.comment_id }}">{{ comment.text }}</textarea>
                                 <small class="text-muted">Author: {{ comment.first_name }} {{ comment.last_name
                                     }}</small>
                             </div>
@@ -75,7 +78,10 @@
                                 </button>
                                 <ul aria-labelledby="dropdownCommentMenu" class="dropdown-menu">
                                     <li>
-                                        <button class="dropdown-item" type="button">Edit</button>
+                                        <button class="dropdown-item"
+                                                onclick="window.location.href='{{ url_for('views.edit_comment', blog_id=blog.blog_id, comment_id=comment.comment_id) }}'"
+                                                type="button">Edit
+                                        </button>
                                     </li>
                                     <li>
                                         <button class="dropdown-item"
