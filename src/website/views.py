@@ -1,3 +1,4 @@
+from dominate.tags import comment
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required
 from werkzeug import Response
@@ -174,6 +175,37 @@ def edit_blog() -> Response | str:
                            login_form=login_form)
 
 
+@views.route("/edit-comment/<int:blog_id>/<int:comment_id>", methods=['GET', 'POST'])
+@login_required
+def edit_comment(blog_id, comment_id):
+    # Ensure login_form is available for all routes.
+    login_form = LoginForm()
+
+    requested_blog = blogs_manager.get_by_id(str(blog_id))
+    requested_comments = blogs_manager.get_comments_by_blog(blog_id)
+    requested_comment = blogs_manager.get_comment_by_id(comment_id)
+    edit_form = CommentForm()
+
+    try:
+        if requested_comment:
+            edit_form = CommentForm(comment=requested_comment['text'])
+
+            if edit_form.validate_on_submit():
+                blogs_manager.update_comment(
+                    requested_comment['comment_id'],
+                    edit_form.comment.data)
+                flash('Comment successfully updated.', 'success')
+                return redirect(request.referrer)
+        else:
+            flash('Failed to update comment.', 'danger')
+            return redirect(request.referrer)
+    except Exception as err:
+        logger.error(f'Error when editing comment: {err}')
+
+    return render_template("display_blog.html", blog=requested_blog, login_form=login_form, comment_form=edit_form,
+                           comments=requested_comments, is_edit=True, new_comment=requested_comment)
+
+
 @views.route("/reading", methods=['GET', 'POST'])
 def find_blog() -> Response | str:
     """
@@ -189,7 +221,7 @@ def find_blog() -> Response | str:
     blog_id = request.args.get('blog_id')
     try:
         requested_blog = blogs_manager.get_by_id(blog_id)
-        requested_comments = blogs_manager.get_comments(int(blog_id))
+        requested_comments = blogs_manager.get_comments_by_blog(int(blog_id))
         if not requested_blog:
             logger.warning(f"Blog with Id: {blog_id} not found.")
             return redirect(url_for('views.home_page'))
