@@ -51,7 +51,7 @@ git clone https://github.com/ozysouza/blogs-application.git
 cd your-repo-name
 
 Create and Activate a Virtual Environment:
-pyp3 install virtualenv
+pip3 install virtualenv
 Active virtual environment: source .venv/bin/activate  # On Windows use `venv\Scripts\activate`
 Deactivate virtual environment: deactivate
 
