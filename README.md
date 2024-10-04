@@ -50,10 +50,16 @@ Clone the Repository:
 git clone https://github.com/ozysouza/blogs-application.git
 cd your-repo-name
 
-Create and Activate a Virtual Environment:
-pip3 install virtualenv
-Active virtual environment: source .venv/bin/activate  # On Windows use `venv\Scripts\activate`
-Deactivate virtual environment: deactivate
+# Create and Activate a Virtual Environment:
+1. pip3 install virtualenv
+
+2. virtualenv venv
+
+3. source .venv/bin/activate
+
+4. which python - Check source
+
+5. Deactivate virtual environment: deactivate
 
 # Install Dependencies:
 pip install -r requirements.txt
